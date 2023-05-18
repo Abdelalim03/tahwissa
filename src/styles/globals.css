@@ -2,26 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
+
+  @apply font-body;
+}
+
+/* Navbar */
+.navbar {
+  @apply px-10 inset-0 flex justify-between items-center py-5;
+}
+
+.logo {
+  @apply text-4xl text-[#42A7C3] font-bold font-logo select-none;
+}
+
+.list-items {
+  @apply items-center justify-between flex-col lg:flex-row  gap-10 text-base font-display font-normal;
+}
+
+.nav-item {
+  @apply lg:mx-5 border-2 border-transparent rounded-lg px-6 py-2  hover:border-orange-500 transition-all duration-300;
+}
+
+.signup-button {
+  @apply bg-orange-500 px-6 py-2 font-bold text-white rounded-lg;
+}
+
+/*Hero*/
+.hero {
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    180deg,
+    #e2f6fc 14.25%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  @apply flex min-h-screen flex-col-reverse lg:flex-row items-center justify-center gap-5 lg:gap-32  py-24 px-16;
+}
+
+/*Destinations*/
+
+.title {
+  @apply text-4xl font-bold text-[#333333] text-center lg:text-left;
+}
+.desc {
+  @apply text-base text-[#333333] mb-4 text-center lg:text-left;
+}
+
+/*ChooseUS*/
+.voyagers {
+  background: linear-gradient(
+    10deg,
+    #e2f6fc 14.25%,
+    rgba(255, 255, 255, 0) 90%
+  );
+}
+
+
+/*Footer*/
+.rainbow{
+  background-image: linear-gradient(45deg,#42a7c3,#70bed3,#42a7c3,#70bed3,#42a7c3,#70bed3);
 }

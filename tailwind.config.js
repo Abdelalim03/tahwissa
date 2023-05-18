@@ -13,6 +13,15 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
+    fontFamily:{
+      'logo': ['Roboto'],
+      'body': ['"Poppins"'],
+      'display':["Lato"]
+    },
+    container:{
+      center:true,
+      padding:"2rem"
+    }
   },
   plugins: [],
 }
