@@ -1,12 +1,11 @@
 import HeroButton from '@/components/shared/HeroButton'
-import React from 'react'
 
 function Hero() {
   return (
     <main
       className="hero"
     >
-      <div className=' flex flex-col  gap-2 lg:gap-7'>
+      <div className='flex flex-col  gap-2 lg:gap-7'>
         <div className='font-bold text-3xl lg:text-5xl text-[#333333]'>
         Start your journey<br/>
         by one click, explore<br/> beautiful world!

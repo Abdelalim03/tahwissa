@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import Title from './Title';
+import Title from '@/components/shared/Title';
+import  { useState } from 'react'
 
 const MAX_COUNT = 6;
 
@@ -14,7 +14,7 @@ function AddPointForm(props) {
     setInputs(values => ({ ...values, [name]: value }));
   }
 
-  function handleCheckBox(event){
+  function handleCheckBox(event){ 
     const name = event.target.name;
     const value = event.target.checked;
     setThemes(values => ({...values, [name]: value }));
@@ -89,7 +89,7 @@ function AddPointForm(props) {
     <div className='example w-screen h-[1000px] overflow-auto flex flex-col gap-10'>
         <div className=' mt-10 mx-auto flex flex-col gap-2'>
          
-          <Title first={'Add New Point'} ></Title>
+          <Title first={'Add New Point'} />
           
         </div>
         <form onSubmit={handleSubmit} className='w-[390px] md:w-[850px] lg:w-[1220px] h-[1120px] md:h-[800px] shadow-lg mx-auto py-6 md:py-8 lg:py-10 px-7 md:px-14 lg:px-16 flex flex-col gap-5'>
