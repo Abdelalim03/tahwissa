@@ -10,18 +10,13 @@ import AddPointForm from '@/components/shared/AddPointForm'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  /*return (
+  return (
     <>
     <Hero />
     <Destinations />
     <PlanVacation /> 
     <ChooseUs />
     <Footer />
-    </>
-  )*/
-  return(
-    <>
-    <AddPointForm/> 
     </>
   )
 }
