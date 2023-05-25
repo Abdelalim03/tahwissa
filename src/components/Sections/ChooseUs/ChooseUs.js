@@ -22,7 +22,7 @@ function ChooseUs() {
     },
   ]
   return (
-    <div className='  voyagers flex lg:px-28 py-20 justify-around items-center font-display'>
+    <div className='voyagers flex lg:px-28 py-20 justify-around items-center font-display'>
       <div className='hidden lg:block lg:w-[40%]'>
         <img src="/sections/chooseUs/chooseUs.svg" alt="" />
       </div>
