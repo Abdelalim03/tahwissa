@@ -1,4 +1,4 @@
-import Model from "@/components/shared/Model";
+import Model from "@/components/shared/Modal";
 import Title from "@/components/shared/Title";
 import { useState } from "react";
 

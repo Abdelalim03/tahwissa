@@ -1,6 +1,6 @@
 import DestinationCard from '@/components/shared/DestinationCard';
 import FilterCities from '@/components/shared/FilterCities';
-import { AlgeriaMap } from '@/components/shared/Map';
+import { AlgeriaMap } from '@/components/shared/Maps/Map';
 import Title from '@/components/shared/Title'
 import React, { useState } from 'react'
 

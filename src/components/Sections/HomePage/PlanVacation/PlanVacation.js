@@ -1,5 +1,5 @@
 import FilterCities from "@/components/shared/FilterCities";
-import { AlgeriaMap } from "@/components/shared/Map";
+import { AlgeriaMap } from "@/components/shared/Maps/Map";
 import  {  useState } from "react";
 
 function PlanVacation() {
