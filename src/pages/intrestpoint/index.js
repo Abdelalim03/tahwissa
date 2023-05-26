@@ -1,8 +1,10 @@
-import DestinationCard from "@/components/shared/DestinationCard";
-import Link from "next/link";
-import React from "react";
+import DestinationCard from '@/components/shared/DestinationCard';
+import FilterCities from '@/components/shared/FilterCities';
+import { AlgeriaMap } from '@/components/shared/Map';
+import Title from '@/components/shared/Title'
+import React, { useState } from 'react'
 
-function Destinations() {
+function InterestPoint() {
   const Destinations = [
     {
       id: "1",
@@ -45,27 +47,36 @@ function Destinations() {
       time: "3 Days",
     },
   ];
-  
+  const initialCities = [
+    {
+      x: 3.1845359510239177,
+      y: 36.720780606450575,
+      city: "bougaa",
+      state: "setif",
+      themes: ["Histoire"],
+      category: "Place",
+      description: "",
+    },
+  ];
+  const [cities, setCities] = useState(initialCities);
   return (
-    <div className="container flex flex-col gap-5  font-display py-20">
-      <div className="flex justify-between px-8 items-center">
-        <div className="flex flex-col gap-5">
-          <h2 className="title">Popular Destinations</h2>
-          <p className="desc">
-            Vacations to make your experience enjoyable in Indonesia!
-          </p>
-        </div>
-        <Link href="/intrestpoint" className="text-base text-mainColor">Show all</Link>
-      </div>
-      <div className="grid  justify-center justify-items-center   grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+    <div className='py-24 flex flex-col gap-10'>
+      <Title  first={"Lieux Touristiques"} />
+      <FilterCities  initialCities={initialCities} setCities={setCities} />
+      <div className='flex flex-col lg:flex-row'>
+      <div className="flex flex-wrap  justify-center items-center justify-items-center gap-5">
         {Destinations.map((destination) => {
           return (
             <DestinationCard key={destination.id} destination={destination} />
           );
         })}
       </div>
+        <div className='flex justify-center items-center min-h-screen w-full'>
+        <AlgeriaMap cities={initialCities} />
+        </div>
+      </div>
     </div>
-  );
+  )
 }
 
-export default Destinations;
+export default InterestPoint

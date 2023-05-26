@@ -11,7 +11,7 @@ const singlepoint = () => {
   SwiperCore.use([Navigation]);
 
   return (
-    <div className="example py-24  min-h-screen overflow-auto">
+    <div className=" py-24  min-h-screen overflow-auto">
       <Title first={"Point Details"} />
       <div className="container p-10 w-fit shadow-xl rounded-lg flex flex-col justify-center items-center gap-10">
         <div className="flex flex-col-reverse lg:flex-row gap-10 w-full">
@@ -61,7 +61,7 @@ const singlepoint = () => {
               </div>
             </div>
           </div>
-          <div
+          {/* <div
             style={{
               backgroundImage: `url('/background/sea.jpg')`,
               backgroundSize: "cover",
@@ -76,7 +76,8 @@ const singlepoint = () => {
               <img src="/background/play.png" alt="play" className="" />
               <span className="tooltiptext font-semibold">About Algeria</span>
             </a>
-          </div>
+          </div> */}
+          <iframe src="https://www.youtube.com/embed/GFgiatqPJ5I" className="link rounded-lg flex justify-center items-center bg-slate-400 lg:w-[750px]" ></iframe>
         </div>
         <div
           style={{

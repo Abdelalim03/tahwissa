@@ -7,9 +7,8 @@ import Map, {
   ScaleControl,
 } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
-import GeocoderControl from './geocoder-control';
-
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import GeocoderControl from "./geocoder-control";
 
 import { useState } from "react";
 
@@ -21,11 +20,9 @@ export const AlgeriaMap = ({ cities }) => {
     latitude: 36.720780606450575,
     zoom: 10,
   });
-  
 
   const pins = cities.map((position) => {
     return (
-        
       <Marker
         key={position.x}
         longitude={position.x}
@@ -55,7 +52,7 @@ export const AlgeriaMap = ({ cities }) => {
   });
 
   return (
-    <Map 
+    <Map
       initialViewState={viewport}
       style={{ width: "100%", height: "100%" }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
@@ -65,7 +62,11 @@ export const AlgeriaMap = ({ cities }) => {
       <FullscreenControl position="top-left" />
       <NavigationControl position="top-left" />
       <ScaleControl />
-      <GeocoderControl mapboxAccessToken={process.env.NEXT_PUBLIC_ACCESS_TOKEN}  countries="dz" position="top-right" />
+      <GeocoderControl
+        mapboxAccessToken={process.env.NEXT_PUBLIC_ACCESS_TOKEN}
+        countries="dz"
+        position="top-right"
+      />
 
       {pins}
 
@@ -75,7 +76,6 @@ export const AlgeriaMap = ({ cities }) => {
           longitude={Number(popupInfo.x)}
           latitude={Number(popupInfo.y)}
           onClose={() => setPopupInfo(null)}
-          
         >
           <div>
             {popupInfo.city}, {popupInfo.state} |{" "}

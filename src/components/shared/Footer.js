@@ -1,5 +1,5 @@
 import React from "react";
-import HeroButton from "./HeroButton";
+import HeroButton from "../Sections/HomePage/Hero/HeroButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
