@@ -1,7 +1,7 @@
 import React from "react";
 import HeroButton from "./HeroButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faFacebookF, faInstagram, faSquareInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 function Footer() {
   return (
