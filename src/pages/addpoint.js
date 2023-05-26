@@ -1,11 +1,12 @@
 import Title from "@/components/shared/Title";
 import { useState } from "react";
 
-const MAX_COUNT = 6;
+const MAX_COUNT = 4;
 
 function AddPointForm(props) {
   const [inputs, setInputs] = useState({});
   const [themes, setThemes] = useState({});
+  const [transports, settransport] = useState({});
 
   function handleChange(event) {
     const name = event.target.name;
@@ -13,10 +14,16 @@ function AddPointForm(props) {
     setInputs((values) => ({ ...values, [name]: value }));
   }
 
-  function handleCheckBox(event) {
+  function handleThemeCheckBox(event) {
     const name = event.target.name;
     const value = event.target.checked;
     setThemes((values) => ({ ...values, [name]: value }));
+  }
+
+  function handleTransportCheckBox(event) {
+    const name = event.target.name;
+    const value = event.target.checked;
+    settransport((values) => ({ ...values, [name]: value }));
   }
 
   const handleSubmit = (event) => {
@@ -82,17 +89,16 @@ function AddPointForm(props) {
   };
 
   return (
-    <div className="py-16  min-h-screen overflow-auto flex flex-col gap-10">
-      <div className=" mt-10 mx-auto flex flex-col gap-2">
-        <Title first={"Add New Point"} />
-      </div>
+    <div className="example py-24  min-h-screen overflow-auto flex flex-col gap-10">
+      <Title first={"Add New Point"} />
+
       <htmlForm
         onSubmit={handleSubmit}
         className=" shadow-xl mx-auto py-6  px-7 md:px-14 lg:px-16 flex flex-col gap-5"
       >
         <div className="w-full flex flex-col gap-1">
           <p className="text-lg md:text-left text-center mb-2">
-            Choose the announce themes :{" "}
+            Choose the point themes :
           </p>
           <div className="flex flex-row gap-2 md:gap-4 justify-center md:justify-start md:items-center  text-base ">
             <input
@@ -100,7 +106,7 @@ function AddPointForm(props) {
               name="theme1"
               value="theme1"
               id="theme1"
-              onChange={handleCheckBox}
+              onChange={handleThemeCheckBox}
             />
             <label htmlFor="theme1">theme1</label>
             <input
@@ -108,7 +114,7 @@ function AddPointForm(props) {
               name="theme2"
               value="theme2"
               id="theme2"
-              onChange={handleCheckBox}
+              onChange={handleThemeCheckBox}
             />
             <label htmlFor="theme2">theme2</label>
             <input
@@ -116,7 +122,7 @@ function AddPointForm(props) {
               name="theme3"
               value="theme3"
               id="theme3"
-              onChange={handleCheckBox}
+              onChange={handleThemeCheckBox}
             />
             <label htmlFor="theme3">theme3</label>
             <input
@@ -124,10 +130,55 @@ function AddPointForm(props) {
               name="theme4"
               value="theme4"
               id="theme4"
-              onChange={handleCheckBox}
+              onChange={handleThemeCheckBox}
             />
             <label htmlFor="theme4">theme4</label>
+
           </div>
+    
+          
+        </div>
+        <div className="w-full flex flex-col gap-1">
+          <p className="text-lg md:text-left text-center mb-2">
+            Select the Transportations to the point :
+          </p>
+          <div className="flex flex-row gap-2 md:gap-4 justify-center md:justify-start md:items-center  text-base ">
+            <input
+              type="checkbox"
+              name="tram"
+              value="tram"
+              id="tram"
+              onChange={handleTransportCheckBox}
+            />
+            <label htmlFor="tram">tramway</label>
+            <input
+              type="checkbox"
+              name="train"
+              value="train"
+              id="train"
+              onChange={handleTransportCheckBox}
+            />
+            <label htmlFor="train">train</label>
+            <input
+              type="checkbox"
+              name="bus"
+              value="bus"
+              id="bus"
+              onChange={handleTransportCheckBox}
+            />
+            <label htmlFor="bus">bus</label>
+            <input
+              type="checkbox"
+              name="metro"
+              value="metro"
+              id="metro"
+              onChange={handleTransportCheckBox}
+            />
+            <label htmlFor="metro">metro</label>
+
+          </div>
+    
+          
         </div>
         <div className="w-full flex flex-col gap-1">
           <p className="text-lg text-center md:text-left mb-2">
