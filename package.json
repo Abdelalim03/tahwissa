@@ -14,11 +14,16 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mapbox/mapbox-gl-geocoder": "^5.0.1",
     "autoprefixer": "10.4.14",
+    "daisyui": "^2.51.6",
+    "mapbox-gl": "^2.15.0",
     "next": "13.4.2",
     "postcss": "8.4.23",
     "react": "18.2.0",
+    "react-daisyui": "^3.1.2",
     "react-dom": "18.2.0",
+    "react-map-gl": "^7.0.25",
     "tailwindcss": "3.3.2"
   }
 }
