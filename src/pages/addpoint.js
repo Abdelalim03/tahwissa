@@ -1,3 +1,4 @@
+import Model from "@/components/shared/Model";
 import Title from "@/components/shared/Title";
 import { useState } from "react";
 
@@ -7,6 +8,7 @@ function AddPointForm(props) {
   const [inputs, setInputs] = useState({});
   const [themes, setThemes] = useState({});
   const [transports, settransport] = useState({});
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   function handleChange(event) {
     const name = event.target.name;
@@ -31,6 +33,7 @@ function AddPointForm(props) {
     alert(inputs.contact);*/
     console.log(inputs);
     console.log(themes);
+    console.log(transports);
     alert("brixton bulyyyy");
 
     /*const requestOptions = {
@@ -133,10 +136,7 @@ function AddPointForm(props) {
               onChange={handleThemeCheckBox}
             />
             <label htmlFor="theme4">theme4</label>
-
           </div>
-    
-          
         </div>
         <div className="w-full flex flex-col gap-1">
           <p className="text-lg md:text-left text-center mb-2">
@@ -175,10 +175,7 @@ function AddPointForm(props) {
               onChange={handleTransportCheckBox}
             />
             <label htmlFor="metro">metro</label>
-
           </div>
-    
-          
         </div>
         <div className="w-full flex flex-col gap-1">
           <p className="text-lg text-center md:text-left mb-2">
@@ -249,16 +246,26 @@ function AddPointForm(props) {
           onChange={handleChange}
         ></textarea>
         <div className="flex flex-col gap-5 md:flex-row items-center  lg:flex-row md:justify-between ">
-          <div className="w-[340px] lg:w-[500px]  p-2 cursor-pointer mb-2 text-lg font-bold rounded-sm text-white shadow-sm flex flex-row justify-between items-center px-6  bg-mainColor">
-            <p className="">Repere the announce on the map</p>
-            <div className="h-full flex flex-col justify-center">
-              <img
-                src="/sections/addPointForm/pin.png"
-                alt="pin"
-                className="h-[17px] w-[12px] lg:h-[25px] lg:w-[20px]"
-              />
+          {/* The popup button*/}
+          {isPopupOpen ? ( 
+            <Model onClose={() => setIsPopupOpen(false)} >
+              <div>brixton bulyyyy</div>
+            </Model>
+          ) : (
+            <div
+              className="w-[340px] lg:w-[500px]  p-2 cursor-pointer mb-2 text-lg font-bold rounded-sm text-white shadow-sm flex flex-row justify-between items-center px-6 bg-mainColor"
+              onClick={() => setIsPopupOpen(true)}
+            >
+              <p>Repere the announce on the map</p>
+              <div className="h-full flex flex-col justify-center">
+                <img
+                  src="/sections/addPointForm/pin.png"
+                  alt="pin"
+                  className="h-[17px] w-[12px] lg:h-[25px] lg:w-[20px]"
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="App text-sm">
             <div className="flex">
