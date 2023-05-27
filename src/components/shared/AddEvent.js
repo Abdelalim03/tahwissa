@@ -37,7 +37,7 @@ function AddEvent({onEventSubmit, close}) {
   <div className="flex flex-col justify-center gap-3">
     <Title first={"Add New Event"}/>
     <div
-      className=" shadow-xl mx-auto py-6  px-7 md:px-14 lg:px-16 flex flex-col gap-5"
+      className="  mx-auto py-6  px-7 md:px-14 lg:px-16 flex flex-col gap-5"
     >
       <input
         required

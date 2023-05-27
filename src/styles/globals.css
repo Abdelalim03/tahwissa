@@ -20,6 +20,16 @@ body {
   @apply font-body;
 }
 
+*{
+  outline: none
+}
+select{
+  @apply py-2 px-4 rounded-sm max-w-xs outline-none border-2
+}
+input[type="time"]{
+  @apply py-1 px-2 rounded-sm max-w-xs outline-none border-2
+}
+
 /* Navbar */
 .navbar {
   @apply px-10 inset-0 flex justify-between items-center py-5;

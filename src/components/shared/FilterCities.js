@@ -23,19 +23,17 @@ function FilterCities({ initialCities, setCities }) {
   const handleChange = (event) => {
     switch (event.target.name) {
       case "point":
-        setSearch(event.target.value, filterCities);
+        setSearch(event.target.value);
         break;
       case "category":
-        setCategory(event.target.value, filterCities);
+        setCategory(event.target.value);
         break;
       case "theme":
         if (event.target.checked) {
-          setThemes([...themes, event.target.value], filterCities);
+          setThemes([...themes, event.target.value]);
         } else {
           setThemes(
-            themes.filter((theme) => theme != event.target.value),
-            filterCities
-          );
+            themes.filter((theme) => theme != event.target.value));
         }
         break;
       default:
@@ -61,7 +59,7 @@ function FilterCities({ initialCities, setCities }) {
         value={category}
         onChange={handleChange}
         name="category"
-        className="py-2 px-4 rounded-sm max-w-xs outline-none border-2"
+       
       >
         <option value={""}>Choisir la catégorie</option>
         {CATEGORIES.map((category) => (

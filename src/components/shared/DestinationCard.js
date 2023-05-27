@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 function DestinationCard({ destination,map }) {
-  const { x, y, img, title, category, state, city, time, id } = destination;
+  const { x, y, img, title, category, wilaya, commune, time, id } = destination;
   const dispatch = useDispatch();
   return (
     <div onMouseEnter={()=>{
@@ -26,9 +26,9 @@ function DestinationCard({ destination,map }) {
             src="/sections/destinations/Location.svg"
             alt=""
           />
-          <p className="text-[#8F8F8F] inline text-base">{city+', '+state+', Algérie'}</p>
+          <p className="text-[#8F8F8F] inline text-base">{commune+', '+wilaya+', Algérie'}</p>
         </div>
-        <Link href={`/intrestpoint/${id}`}>
+        <Link href={`/interestpoints/${id}`}>
           <h2 className="text-xl">{title}</h2>
         </Link>
         <p className="text-base mb-2 text-[#636363] ">{time}</p>

@@ -1,40 +1,50 @@
 import AddEvent from "@/components/shared/AddEvent";
+import { FormMap } from "@/components/shared/Maps/FormMap";
 import Modal from "@/components/shared/Modal";
 import Title from "@/components/shared/Title";
-import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { ALGERIA, CATEGORIES, THEMES, TRANSPORTS, initialViewState } from "@/data/data";
+import { useEffect, useState } from "react";
 
 const MAX_COUNT = 4;
 
 function AddPointForm(props) {
+  const [viewState, setViewState] = useState(initialViewState)
   const [inputs, setInputs] = useState({});
-  const [themes, setThemes] = useState({});
-  const [transports, settransport] = useState({});
-  const [selectedStartDate, setSelectedStartDate] = useState(null);
-  const [selectedEndDate, setSelectedEndDate] = useState(null);
+
+  const [themes, setThemes] = useState([]);
+  const [position, setPosition] = useState({longitude:initialViewState.longitude,latitude:initialViewState.latitude})
+  const [transports, setTransports] = useState([]);
   const [selectedWillaya, setSelectedWillaya] = useState("");
   const [selectedTown, setSelectedTown] = useState("");
+  const [openTime, setOpenTime] = useState("");
+  const [closeTime, setCloseTime] = useState("")
   const [events, setevents] = useState([]);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isEventsPopupOpen, setIsEventsPopupOpen] = useState(false);
-  const [isOpent, setIsOpent] = useState(false);
-  const [isOpenw, setIsOpenw] = useState(false);
 
-  const willayas = [
-    "Willaya 1",
-    "Willaya 2",
-    "Willaya 3",
-    "Willaya 4",
-    "Willaya 5",
-  ];
+  
+  useEffect(() => {
+    if (selectedWillaya !== "") {
+      setViewState({longitude:Number(ALGERIA[selectedWillaya]["lng"]),latitude:Number(ALGERIA[selectedWillaya]["lat"]),zoom:10});
+      setPosition({longitude:Number(ALGERIA[selectedWillaya]["lng"]),latitude:Number(ALGERIA[selectedWillaya]["lat"])})
+    }
+    else {
+      // setCommunes([]);
+      setViewState(initialViewState);
+      setPosition({longitude:initialViewState.longitude,latitude:initialViewState.latitude})
+    }
+  }, [selectedWillaya]);
+  useEffect(() => {
+    
+  
+    console.log(selectedWillaya,selectedTown,inputs,themes,transports,position,openTime,closeTime);
 
-  const towns = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
+  }, [position])
+  
 
-  const handleWillayaSelect = (option) => {
-    setSelectedWillaya(option);
-    setIsOpenw(false);
+  const handleWillayaSelect = (e) => {
+    setSelectedWillaya(e.target.value);
   };
 
   const eventsubmited = (event) => {
@@ -44,17 +54,8 @@ function AddPointForm(props) {
     //console.log(events);
   };
 
-  const handleTownSelect = (option) => {
-    setSelectedTown(option);
-    setIsOpent(false);
-  };
-
-  const handleStartDateChange = (date) => {
-    setSelectedStartDate(date);
-  };
-
-  const handleEndDateChange = (date) => {
-    setSelectedEndDate(date);
+  const handleTownSelect = (e) => {
+    setSelectedTown(e.target.value);
   };
 
   function handleChange(event) {
@@ -64,15 +65,20 @@ function AddPointForm(props) {
   }
 
   function handleThemeCheckBox(event) {
-    const name = event.target.name;
-    const value = event.target.checked;
-    setThemes((values) => ({ ...values, [name]: value }));
+    if (event.target.checked) {
+      setThemes([...themes, event.target.value]);
+    } else {
+      setThemes(themes.filter((theme) => theme != event.target.value));
+    }
   }
 
   function handleTransportCheckBox(event) {
-    const name = event.target.name;
-    const value = event.target.checked;
-    settransport((values) => ({ ...values, [name]: value }));
+    if (event.target.checked) {
+      setTransports([...transports, event.target.value]);
+    } else {
+      setTransports(transports.filter((theme) => theme != event.target.value));
+    }
+    
   }
 
   const handleSubmit = (event) => {
@@ -142,140 +148,10 @@ function AddPointForm(props) {
     <div className="example py-24  min-h-screen overflow-auto flex flex-col gap-10">
       <Title first={"Add New Point"} />
 
-      <htmlForm
+      <form
         onSubmit={handleSubmit}
         className=" shadow-xl mx-auto py-6  px-7 md:px-14 lg:px-16 flex flex-col gap-5"
       >
-        <div className="w-full flex flex-col gap-1">
-          <p className="text-lg md:text-left text-center mb-2">
-            Choose the point themes :
-          </p>
-          <div className="flex flex-row gap-2 md:gap-4 justify-center md:justify-start md:items-center  text-base ">
-            <input
-              type="checkbox"
-              name="theme1"
-              value="theme1"
-              id="theme1"
-              onChange={handleThemeCheckBox}
-            />
-            <label htmlFor="theme1">theme1</label>
-            <input
-              type="checkbox"
-              name="theme2"
-              value="theme2"
-              id="theme2"
-              onChange={handleThemeCheckBox}
-            />
-            <label htmlFor="theme2">theme2</label>
-            <input
-              type="checkbox"
-              name="theme3"
-              value="theme3"
-              id="theme3"
-              onChange={handleThemeCheckBox}
-            />
-            <label htmlFor="theme3">theme3</label>
-            <input
-              type="checkbox"
-              name="theme4"
-              value="theme4"
-              id="theme4"
-              onChange={handleThemeCheckBox}
-            />
-            <label htmlFor="theme4">theme4</label>
-          </div>
-        </div>
-        <div className="w-full flex flex-col gap-1">
-          <p className="text-lg md:text-left text-center mb-2">
-            Select the Transportations to the point :
-          </p>
-          <div className="flex flex-row gap-2 md:gap-4 justify-center md:justify-start md:items-center  text-base ">
-            <input
-              type="checkbox"
-              name="tram"
-              value="tram"
-              id="tram"
-              onChange={handleTransportCheckBox}
-            />
-            <label htmlFor="tram">tramway</label>
-            <input
-              type="checkbox"
-              name="train"
-              value="train"
-              id="train"
-              onChange={handleTransportCheckBox}
-            />
-            <label htmlFor="train">train</label>
-            <input
-              type="checkbox"
-              name="bus"
-              value="bus"
-              id="bus"
-              onChange={handleTransportCheckBox}
-            />
-            <label htmlFor="bus">bus</label>
-            <input
-              type="checkbox"
-              name="metro"
-              value="metro"
-              id="metro"
-              onChange={handleTransportCheckBox}
-            />
-            <label htmlFor="metro">metro</label>
-          </div>
-        </div>
-        <div className="w-full flex flex-col gap-1">
-          <p className="text-lg text-center md:text-left mb-2">
-            Select the intrest point category :
-          </p>
-          <div className="md:flex md:flex-row gap-2 md:gap-4 text-sm md:text-base grid grid-flow-row grid-rows-2 grid-cols-6">
-            <input
-              required
-              type="radio"
-              name="category"
-              value="Categroy1"
-              id="category1"
-              onChange={handleChange}
-            />
-            <label htmlFor="category1">category1</label>
-            <input
-              required
-              type="radio"
-              name="category"
-              value="Categroy2"
-              id="category2"
-              onChange={handleChange}
-            />
-            <label htmlFor="category2">category2</label>
-            <input
-              required
-              type="radio"
-              name="category"
-              value="Categroy3"
-              id="category3"
-              onChange={handleChange}
-            />
-            <label htmlFor="category3">category3</label>
-            <input
-              required
-              type="radio"
-              name="category"
-              value="Categroy4"
-              id="category4"
-              onChange={handleChange}
-            />
-            <label htmlFor="category4">category4</label>
-            <input
-              required
-              type="radio"
-              name="category"
-              value="Categroy5"
-              id="category5"
-              onChange={handleChange}
-            />
-            <label htmlFor="category5">categroy5</label>
-          </div>
-        </div>
         <input
           required
           className="w-full p-2 border-[1px] border-[rgba(0, 0, 0, 0.3)] rounded-sm"
@@ -292,69 +168,130 @@ function AddPointForm(props) {
           value={inputs.description || ""}
           onChange={handleChange}
         ></textarea>
+        <div className="w-full flex flex-col gap-1">
+          <p className="text-lg md:text-left text-center mb-2">
+            Choose the point themes :
+          </p>
+          <div className="flex flex-row gap-2 md:gap-4 justify-center md:justify-start md:items-center  text-base ">
+            {THEMES.map((theme) => (
+              <div className="flex items-center gap-2 " key={theme}>
+                <input
+                  type="checkbox"
+                  name={theme}
+                  value={theme}
+                  id={theme}
+                  onChange={handleThemeCheckBox}
+                />
+                <label htmlFor={theme}>{theme}</label>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="w-full flex flex-col gap-1">
+          <p className="text-lg md:text-left text-center mb-2">
+            Select the Transportations to the point :
+          </p>
+          <div className="flex flex-row gap-2 md:gap-4 justify-center md:justify-start md:items-center  text-base ">
+            {TRANSPORTS.map((transport) => (
+              <div className="flex items-center gap-2 " key={transport}>
+                <input
+                  type="checkbox"
+                  name={transport}
+                  value={transport}
+                  id={transport}
+                  onChange={handleTransportCheckBox}
+                />
+                <label htmlFor={transport}>{transport}</label>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="w-full flex flex-col gap-1">
+          <p className="text-lg text-center md:text-left mb-2">
+            Select the intrest point category :
+          </p>
+          <div className="md:flex md:flex-row gap-2 md:gap-4 text-sm md:text-base grid grid-flow-row grid-rows-2 grid-cols-6">
+            {CATEGORIES.map(category=>(
+              <div className="flex items-center gap-2 " key={category}>
+              <input
+              required
+              type="radio"
+              name="category"
+              value={category}
+              id={category}
+              onChange={handleChange}
+            />
+            <label htmlFor={category}>{category}</label>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="flex flex-col gap-5 md:flex-row items-center  lg:flex-row md:justify-between relative">
-          <DatePicker
-            selected={selectedStartDate}
-            onChange={handleStartDateChange}
-            dateFormat="dd/MM/yyyy"
-            placeholderText="Enter the opening date"
-            className="w-full p-2 border border-gray-300 rounded"
-          />
-          <DatePicker
-            selected={selectedEndDate}
-            onChange={handleEndDateChange}
-            dateFormat="dd/MM/yyyy"
-            placeholderText="Enter the closing date"
-            className="w-full p-2 border border-gray-300 rounded"
-          />
-          <input
-            type="text"
-            value={selectedWillaya}
-            readOnly
-            placeholder="Select the willaya"
-            className="w-full p-2 border border-gray-300 rounded cursor-pointer"
-            onClick={() => setIsOpenw(!isOpenw)}
-          />
-          {isOpenw && (
-            <ul className="absolute bottom-11 z-10 w-full overflow-auto h-[200px] mt-2 py-2 bg-white border border-gray-300 rounded shadow">
-              {willayas.map((option) => (
-                <li
-                  key={option}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                  onClick={() => handleWillayaSelect(option)}
-                >
-                  {option}
-                </li>
+          <div className="flex items-center flex-wrap justify-center gap-4">
+            <label htmlFor="timeOpen" className="text-gray-500">
+              Date d'ouvertue :{" "}
+            </label>
+            <input
+              value={openTime}
+              onChange={(e) => setOpenTime(e.target.value)}
+              type="time"
+              name="timeOpen"
+              id="timeOpen"
+            />
+            <label htmlFor="timeClose" className="text-gray-500">
+              Date de fermeture :{" "}
+            </label>
+            <input
+              value={closeTime}
+              onChange={(e) => setCloseTime(e.target.value)}
+              type="time"
+              name="timeClose"
+              id="timeClose"
+            />
+            <select
+              name="wilaya"
+              value={selectedWillaya}
+              onChange={handleWillayaSelect}
+              className="simple-select w-40 lg:w-52"
+            >
+              <option value={""}>Choisir La Wilaya</option>
+              {Object.keys(ALGERIA)?.map((wilaya) => (
+                <option key={wilaya} value={wilaya} className="cursor-pointer">
+                  {wilaya}
+                </option>
               ))}
-            </ul>
-          )}
-          <input
-            type="text"
-            value={selectedTown}
-            readOnly
-            placeholder="Select the town"
-            className="w-full p-2 border border-gray-300 rounded cursor-pointer"
-            onClick={() => setIsOpent(!isOpent)}
-          />
-          {isOpent && (
-            <ul className="absolute bottom-11 z-10 w-full overflow-auto h-[200px] mt-2 py-2 bg-white border border-gray-300 rounded shadow">
-              {towns.map((option) => (
-                <li
-                  key={option}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                  onClick={() => handleTownSelect(option)}
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-          )}
+            </select>
+            <select
+              name="commune"
+              value={selectedTown}
+              onChange={handleTownSelect}
+              className="simple-select w-40 lg:w-52"
+            >
+              <option value={""}>Choisir La Commune</option>
+              {ALGERIA &&
+                ALGERIA[selectedWillaya]?.communes.map((commune) => (
+                  <option
+                    key={commune}
+                    value={commune}
+                    className="cursor-pointer"
+                  >
+                    {commune}
+                  </option>
+                ))}
+            </select>
+          </div>
         </div>
         <div className="flex flex-col gap-5 md:flex-row items-center  lg:flex-row md:justify-between ">
           {/* The popup button*/}
           {isPopupOpen ? (
             /*Map*/
-            <Modal onClose={() => setIsPopupOpen(false)}></Modal>
+            <Modal onClose={() => setIsPopupOpen(false)}>
+              <div className="flex flex-col gap-3 justify-center items-center h-[550px] md:h-[650px]  w-[380px] md:w-[600px] lg:w-[950px] xl:w-[1050px]">
+               <p className=" text-lg font-semibold text-gray-600">Deplacez le pointeur jaune vers la postion du point du lieu touristique:</p> 
+                <FormMap position={position} setPosition={setPosition} setViewState={setViewState} viewState={viewState} />
+              </div>
+            </Modal>
           ) : (
             <div
               className="w-[340px] lg:w-[500px]  p-2 cursor-pointer mb-2 text-lg font-bold rounded-sm text-white shadow-sm flex flex-row justify-between items-center px-6 bg-mainColor"
@@ -416,11 +353,16 @@ function AddPointForm(props) {
           </div>
         </div>
 
-        {isEventsPopupOpen ? (
+        {isEventsPopupOpen && (
           <Modal onClose={() => setIsEventsPopupOpen(false)}>
-            <AddEvent close={() => setIsEventsPopupOpen(false)} onEventSubmit={eventsubmited} />
+            <AddEvent
+              close={() => setIsEventsPopupOpen(false)}
+              onEventSubmit={eventsubmited}
+            />
           </Modal>
-        ) : (
+        )}
+
+        <div className="flex flex-row gap-3 flex-wrap">
           <button
             className="p-2 bg-mainColor cursor-pointer w-fit text-lg font-bold rounded-sm text-white shadow-sm flex flex-row gap-2 items-center"
             onClick={() => setIsEventsPopupOpen(true)}
@@ -432,9 +374,6 @@ function AddPointForm(props) {
               className="w-5 h-5"
             />
           </button>
-        )}
-
-        <div className="flex flex-col gap-1">
           {events.map((event) => (
             <div
               className={`p-2 bg-slate-100 shadow-sm ${
@@ -470,7 +409,7 @@ function AddPointForm(props) {
             <span>Submit</span>
           </label>
         </div>
-      </htmlForm>
+      </form>
     </div>
   );
 }
