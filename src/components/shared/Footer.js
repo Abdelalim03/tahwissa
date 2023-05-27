@@ -1,7 +1,8 @@
 import React from "react";
-import HeroButton from "./HeroButton";
+import HeroButton from "../Sections/HomePage/Hero/HeroButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import Link from "next/link";
 
 function Footer() {
   return (
@@ -19,12 +20,12 @@ function Footer() {
             </h1>
           </div>
           <div className="buttons lg:w-[20%] flex lg:flex-col gap-5 lg:gap-6">
-            <button className="bg-[#42a7c3] text-white text-xl font-bold rounded-lg px-7 py-2 lg:px-12 lg:py-4">
+            <Link href="/signup" className="bg-[#42a7c3] text-white text-xl text-center font-bold rounded-lg px-7 py-2 lg:px-12 lg:py-4">
               Sign In
-            </button>
-            <button className="text-[#42a7c3] bg-white text-xl font-bold rounded-lg px-7 py-2 lg:px-12 lg:py-4">
+            </Link>
+            <Link href="/signin" className="text-[#42a7c3] bg-white text-xl text-center font-bold rounded-lg px-7 py-2 lg:px-12 lg:py-4">
               Sign Up
-            </button>
+            </Link>
           </div>
         </div>
         <div className="border-b-2 pb-9 flex flex-col gap-5 items-center  lg:flex-row text-center lg:text-left justify-between border-white ">
@@ -57,13 +58,13 @@ function Footer() {
         <div className="flex justify-between items-center">
           <p className="text-white text-xl">&copy; {new Date().getFullYear()} Tahwissa.com</p>
           <div className="flex gap-5">
-          <a href="" className="border-[1px] flex justify-center items-center w-8 h-8  rounded-full border-white">
+          <a href="" target="_blank" className="border-[1px] flex justify-center items-center w-8 h-8  rounded-full border-white">
           <FontAwesomeIcon icon={faInstagram}  style={{color: "#ffffff"}} />
           </a>
-          <a href="" className="border-[1px] flex justify-center items-center w-8 h-8  rounded-full border-white">
+          <a href="" target="_blank" className="border-[1px] flex justify-center items-center w-8 h-8  rounded-full border-white">
           <FontAwesomeIcon icon={faFacebookF}  style={{color: "#ffffff"}} />
           </a>
-          <a href="" className="border-[1px] flex justify-center items-center w-8 h-8  rounded-full border-white">
+          <a href="" target="_blank" className="border-[1px] flex justify-center items-center w-8 h-8  rounded-full border-white">
           <FontAwesomeIcon icon={faTwitter}  style={{color: "#ffffff"}} />
           </a>
           </div>

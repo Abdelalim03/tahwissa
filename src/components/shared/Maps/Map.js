@@ -2,35 +2,37 @@ import Map, {
   FullscreenControl,
   GeolocateControl,
   Marker,
-  NavigationControl,
+  NavigationControl, 
   Popup,
   ScaleControl,
 } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
-import GeocoderControl from './geocoder-control';
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import GeocoderControl from "./geocoder-control";
+
+import { useCallback, useMemo, useState } from "react";
+import {useSelector, useDispatch} from 'react-redux';
+import { initialViewState } from "@/data/data";
 
 
-import { useState } from "react";
-
-export const AlgeriaMap = ({ cities }) => {
+export const AlgeriaMap = ({ cities, landing }) => {
   const [popupInfo, setPopupInfo] = useState(null);
+  const mapStyle = useSelector(s => s.mapStyle);
+  const viewState = useSelector(s => s.viewState);
+  const dispatch = useDispatch();
 
-  const [viewport, setViewport] = useState({
-    longitude: 3.1845359510239177,
-    latitude: 36.720780606450575,
-    zoom: 10,
-  });
-  
+  const onMove = useCallback(evt => {
+    dispatch({type: 'setViewState', payload: evt.viewState});
+  }, []);
 
-  const pins = cities.map((position) => {
+  const pins = useMemo(() =>cities.map((position) => {
     return (
-        
       <Marker
         key={position.x}
         longitude={position.x}
         latitude={position.y}
         anchor="bottom"
+        color="red"
         onClick={(e) => {
           // If we let the click event propagates to the map, it will immediately close the popup
           // with `closeOnClick: true`
@@ -52,32 +54,39 @@ export const AlgeriaMap = ({ cities }) => {
         </svg>
       </Marker>
     );
-  });
+  }),[cities]);
 
   return (
-    <Map 
-      initialViewState={viewport}
-      style={{ width: "100%", height: "100%" }}
-      mapStyle="mapbox://styles/mapbox/streets-v9"
+    <Map
+
+      {...viewState}
+      onMove={onMove}
+       style={{ width: "100%", height: "100%" }}
+      mapStyle={mapStyle}
       mapboxAccessToken={process.env.NEXT_PUBLIC_ACCESS_TOKEN}
     >
       <GeolocateControl position="top-left" />
       <FullscreenControl position="top-left" />
       <NavigationControl position="top-left" />
       <ScaleControl />
-      <GeocoderControl mapboxAccessToken={process.env.NEXT_PUBLIC_ACCESS_TOKEN}  countries="dz" position="top-right" />
+      <GeocoderControl
+        mapboxAccessToken={process.env.NEXT_PUBLIC_ACCESS_TOKEN}
+        countries="dz"
+        position="top-right"
+      />
 
       {pins}
 
       {popupInfo && (
         <Popup
+          closeButton={false}
+          
           anchor="top"
           longitude={Number(popupInfo.x)}
           latitude={Number(popupInfo.y)}
           onClose={() => setPopupInfo(null)}
-          
         >
-          <div>
+          <div >
             {popupInfo.city}, {popupInfo.state} |{" "}
             <a
               target="_new"

@@ -21,8 +21,8 @@ function Navbar() {
           visible ? " flex h-fit" : " hidden lg:flex "
         }`}
       >
-              <Link className='nav-item' href="/#product" >Product</Link>
-              <Link className='nav-item' href="/#contact" >Contact Us</Link>
+              <Link className='nav-item' href="/" >Home</Link>
+              <Link className='nav-item' href="/" >Contact Us</Link>
               <Link className='nav-item' href="/#about" >About Us</Link>
               <button className={` signup-button lg:hidden
         `}>

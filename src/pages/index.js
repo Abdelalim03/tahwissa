@@ -18,6 +18,5 @@ export default function Home() {
     <Footer />
     </>
   )
-  
-  
+
 }
