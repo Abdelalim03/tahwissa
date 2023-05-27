@@ -5,7 +5,7 @@ function Navbar() {
   const [visible, setVisible] = useState(false);
   const toggleVisible = () => setVisible(!visible);
   return (
-    <nav className={`navbar  fixed backdrop-blur-sm z-50 h-fit flex-col lg:flex-row border-b-2 `}>
+    <nav className={`navbar  fixed backdrop-blur-sm z-40 h-fit flex-col lg:flex-row border-b-2 `}>
         <div className={`flex lg:block w-full lg:w-auto justify-between  items-center ${visible && "mb-10" }  lg:mb-0`}>
           <Link href="/" className='logo '>
               Travelling!

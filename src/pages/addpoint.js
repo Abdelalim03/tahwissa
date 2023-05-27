@@ -1,3 +1,4 @@
+import AddEvent from "@/components/shared/AddEvent";
 import Modal from "@/components/shared/Modal";
 import Title from "@/components/shared/Title";
 import { useState } from "react";
@@ -10,23 +11,23 @@ function AddPointForm(props) {
   const [inputs, setInputs] = useState({});
   const [themes, setThemes] = useState({});
   const [transports, settransport] = useState({});
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
-
   const [selectedWillaya, setSelectedWillaya] = useState("");
-  const [isOpenw, setIsOpenw] = useState(false);
-
   const [selectedTown, setSelectedTown] = useState("");
+  const [events, setevents] = useState([]);
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isEventsPopupOpen, setIsEventsPopupOpen] = useState(false);
   const [isOpent, setIsOpent] = useState(false);
+  const [isOpenw, setIsOpenw] = useState(false);
 
   const willayas = [
     "Willaya 1",
     "Willaya 2",
     "Willaya 3",
     "Willaya 4",
-    "Willaya 5"
+    "Willaya 5",
   ];
 
   const towns = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
@@ -34,6 +35,13 @@ function AddPointForm(props) {
   const handleWillayaSelect = (option) => {
     setSelectedWillaya(option);
     setIsOpenw(false);
+  };
+
+  const eventsubmited = (event) => {
+    const availableEvents = [...events];
+    availableEvents.push(event);
+    setevents(availableEvents);
+    //console.log(events);
   };
 
   const handleTownSelect = (option) => {
@@ -345,6 +353,7 @@ function AddPointForm(props) {
         <div className="flex flex-col gap-5 md:flex-row items-center  lg:flex-row md:justify-between ">
           {/* The popup button*/}
           {isPopupOpen ? (
+            /*Map*/
             <Modal onClose={() => setIsPopupOpen(false)}></Modal>
           ) : (
             <div
@@ -405,6 +414,46 @@ function AddPointForm(props) {
               </div>
             </div>
           </div>
+        </div>
+
+        {isEventsPopupOpen ? (
+          <Modal onClose={() => setIsEventsPopupOpen(false)}>
+            <AddEvent close={() => setIsEventsPopupOpen(false)} onEventSubmit={eventsubmited} />
+          </Modal>
+        ) : (
+          <button
+            className="p-2 bg-mainColor cursor-pointer w-fit text-lg font-bold rounded-sm text-white shadow-sm flex flex-row gap-2 items-center"
+            onClick={() => setIsEventsPopupOpen(true)}
+          >
+            <span>add event</span>
+            <img
+              src="/sections/addPointForm/plus.png"
+              alt="plus"
+              className="w-5 h-5"
+            />
+          </button>
+        )}
+
+        <div className="flex flex-col gap-1">
+          {events.map((event) => (
+            <div
+              className={`p-2 bg-slate-100 shadow-sm ${
+                events.length === 0 && "hidden"
+              }`}
+            >
+              {event.title}
+            </div>
+          ))}
+        </div>
+        <div
+          className={`${
+            events.length === 0 && "hidden"
+          } rounded-lg cursor-pointer p-2 w-fit flex justify-center items-center  bg-[#EE462F]`}
+          onClick={() => {
+            setevents([]);
+          }}
+        >
+          Reset
         </div>
 
         <div className="flex flex-row-reverse w-full">
