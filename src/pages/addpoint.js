@@ -1,6 +1,8 @@
-import Model from "@/components/shared/Modal";
+import Modal from "@/components/shared/Modal";
 import Title from "@/components/shared/Title";
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const MAX_COUNT = 4;
 
@@ -9,6 +11,43 @@ function AddPointForm(props) {
   const [themes, setThemes] = useState({});
   const [transports, settransport] = useState({});
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
+
+  const [selectedWillaya, setSelectedWillaya] = useState("");
+  const [isOpenw, setIsOpenw] = useState(false);
+
+  const [selectedTown, setSelectedTown] = useState("");
+  const [isOpent, setIsOpent] = useState(false);
+
+  const willayas = [
+    "Willaya 1",
+    "Willaya 2",
+    "Willaya 3",
+    "Willaya 4",
+    "Willaya 5"
+  ];
+
+  const towns = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
+
+  const handleWillayaSelect = (option) => {
+    setSelectedWillaya(option);
+    setIsOpenw(false);
+  };
+
+  const handleTownSelect = (option) => {
+    setSelectedTown(option);
+    setIsOpent(false);
+  };
+
+  const handleStartDateChange = (date) => {
+    setSelectedStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setSelectedEndDate(date);
+  };
 
   function handleChange(event) {
     const name = event.target.name;
@@ -245,12 +284,68 @@ function AddPointForm(props) {
           value={inputs.description || ""}
           onChange={handleChange}
         ></textarea>
+        <div className="flex flex-col gap-5 md:flex-row items-center  lg:flex-row md:justify-between relative">
+          <DatePicker
+            selected={selectedStartDate}
+            onChange={handleStartDateChange}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="Enter the opening date"
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          <DatePicker
+            selected={selectedEndDate}
+            onChange={handleEndDateChange}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="Enter the closing date"
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          <input
+            type="text"
+            value={selectedWillaya}
+            readOnly
+            placeholder="Select the willaya"
+            className="w-full p-2 border border-gray-300 rounded cursor-pointer"
+            onClick={() => setIsOpenw(!isOpenw)}
+          />
+          {isOpenw && (
+            <ul className="absolute bottom-11 z-10 w-full overflow-auto h-[200px] mt-2 py-2 bg-white border border-gray-300 rounded shadow">
+              {willayas.map((option) => (
+                <li
+                  key={option}
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleWillayaSelect(option)}
+                >
+                  {option}
+                </li>
+              ))}
+            </ul>
+          )}
+          <input
+            type="text"
+            value={selectedTown}
+            readOnly
+            placeholder="Select the town"
+            className="w-full p-2 border border-gray-300 rounded cursor-pointer"
+            onClick={() => setIsOpent(!isOpent)}
+          />
+          {isOpent && (
+            <ul className="absolute bottom-11 z-10 w-full overflow-auto h-[200px] mt-2 py-2 bg-white border border-gray-300 rounded shadow">
+              {towns.map((option) => (
+                <li
+                  key={option}
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleTownSelect(option)}
+                >
+                  {option}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
         <div className="flex flex-col gap-5 md:flex-row items-center  lg:flex-row md:justify-between ">
           {/* The popup button*/}
-          {isPopupOpen ? ( 
-            <Model onClose={() => setIsPopupOpen(false)} >
-              <div>brixton bulyyyy</div>
-            </Model>
+          {isPopupOpen ? (
+            <Modal onClose={() => setIsPopupOpen(false)}></Modal>
           ) : (
             <div
               className="w-[340px] lg:w-[500px]  p-2 cursor-pointer mb-2 text-lg font-bold rounded-sm text-white shadow-sm flex flex-row justify-between items-center px-6 bg-mainColor"
