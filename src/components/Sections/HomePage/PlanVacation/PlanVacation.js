@@ -1,20 +1,20 @@
 import FilterCities from "@/components/shared/FilterCities";
 import { AlgeriaMap } from "@/components/shared/Maps/Map";
-import  {  useState } from "react";
+import { initialCities, initialViewState } from "@/data/data";
+import  {  useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function PlanVacation() {
-  const initialCities = [
-    {
-      x: 3.1845359510239177,
-      y: 36.720780606450575,
-      city: "bougaa",
-      state: "setif",
-      themes: ["Histoire"],
-      category: "Place",
-      description: "",
-    },
-  ];
+
   const [cities, setCities] = useState(initialCities);
+  const viewState = useSelector(s => s.viewState);
+  const dispatch = useDispatch();
+
+ 
+  useEffect(() => {
+    if (viewState.longitude!== 3.1845359510239177 || viewState.latitude!== 36.720780606450575)
+      dispatch({type: 'setViewState', payload: initialViewState});
+  }, [])
   
 
   return (
@@ -29,7 +29,7 @@ function PlanVacation() {
       </div>
       <FilterCities initialCities={initialCities} setCities={setCities} />
       <div className=" flex justify-center items-center h-[550px] md:h-[650px] w-[80%]">
-        <AlgeriaMap cities={cities}  />
+        <AlgeriaMap  cities={cities}  />
       </div>
     </div>
   );

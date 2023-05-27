@@ -1,6 +1,80 @@
 export const THEMES = ["Histoire","Nature","Gastronomie","Divertissement"]
 export const CATEGORIES=["Monument", "Musée","Place","Religieux"]
 
+export const  initialCities = [
+    {
+      id: "1",
+      img: "/sections/destinations/dest3.svg",
+      x: 6.1845359510239177,
+      y: 34.720780606450575,
+      city: "bougaa",
+      state: "setif",
+      themes: ["Histoire"],
+      category: "Place",
+      title:"bougaa lafayette",
+      description: "",
+      time: "3 Days",
+    },
+    {
+      id: "5",
+      img: "/sections/destinations/dest3.svg",
+      x: 5.1845359510239177,
+      y: 31.720780606450575,
+      city: "bougaa",
+      state: "setif",
+      themes: ["Histoire"],
+      category: "Place",
+      title:"bougaa lafayette",
+      description: "",
+      time: "3 Days",
+    },
+    {
+      id: "2",
+      img: "/sections/destinations/dest3.svg",
+      x: 9.1845359510239177,
+      y: 33.720780606450575,
+      city: "bougaa",
+      state: "setif",
+      themes: ["Histoire"],
+      category: "Place",
+      title:"bougaa lafayette",
+      description: "",
+      time: "3 Days",
+    },
+    {
+      id: "3",
+      img: "/sections/destinations/dest3.svg",
+      x: 3.1845359510239177,
+      y: 36.720780606450575,
+      city: "bougaa",
+      state: "setif",
+      themes: ["Histoire"],
+      category: "Place",
+      title:"bougaa lafayette",
+      description: "",
+      time: "3 Days",
+    },
+    {
+      id: "4",
+      img: "/sections/destinations/dest3.svg",
+      x: 6.45,
+      y: 33.123,
+      city: "bougaa",
+      state: "setif",
+      themes: ["Histoire"],
+      category: "Place",
+      title:"bougaa lafayette",
+      description: "",
+      time: "3 Days",
+    },
+  ];
+
+export const initialViewState = {
+    longitude: 3.1845359510239177,
+    latitude: 36.720780606450575,
+    zoom: 10, 
+  }
+
 export const WILAYAS = {
     "Adrar": [
         "Timekten",
