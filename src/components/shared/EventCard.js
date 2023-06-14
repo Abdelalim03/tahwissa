@@ -3,7 +3,7 @@ function EventCard() {
   return (
     <div className="flex flex-col w-fit p-7 mx-auto lg:m-0 rounded-lg shadow-xl cursor-pointer">
           <img
-                  className="h-full w-full"
+                  className="rounded-lg w-[250px] h-[200px] lg:w-[350px]"
                   src="/test/test2.jpg"
                   alt="eventimg"
             />

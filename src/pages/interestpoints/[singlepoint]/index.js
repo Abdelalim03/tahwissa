@@ -5,9 +5,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
 import EventCard from "@/components/shared/EventCard";
 import Testimonies from "@/components/shared/Testimonies";
-import { useState } from "react";
+import React, { useState } from "react";
 
-const singlepoint = () => {
+function Singlepoint(){
   const router = useRouter();
   const { id } = router.query;
   const images = ["/test/test2.jpg", "/test/test1.jpg", "/test/test3.jpg"];
@@ -202,4 +202,4 @@ const singlepoint = () => {
   );
 };
 
-export default singlepoint;
+export default Singlepoint;
