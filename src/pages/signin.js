@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import Link from "next/link";
 import Title from "@/components/shared/Title";
 import  AuthContext, { useAuth }  from "@/components/AuthContext";
+import { AiFillCloseCircle } from "react-icons/ai"
 
 export default function Signin() {
 
@@ -87,7 +88,7 @@ export default function Signin() {
           <button
             onClick={handleSnackbarClose}
           >
-            <img className="rounded-sm w-6 h-5" src="/close.jpg" alt="close"/>
+            <AiFillCloseCircle />
           </button>
         </div>
       )}
