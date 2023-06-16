@@ -60,7 +60,7 @@ function Navbar() {
           About Us
         </a>
         {user ? (
-          <div className="relative inline-block select-none">
+          <div className="relative lg:hidden inline-block select-none">
             <div
               className="flex items-center space-x-2 cursor-pointer"
               onClick={toggleDropdown}
