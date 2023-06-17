@@ -15,37 +15,51 @@ export const AuthProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
 
+  const [show, setShow] = useState(false);
+
   const router = useRouter();
 
   const loginUser = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://127.0.0.1:8000/token/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: e.target.username.value,
-        password: e.target.password.value,
-      }),
-    });
-    if (response.ok) {
-      let data = await response.json();
-      if (data) {
-        if (typeof window !== "undefined") {
-          localStorage.setItem("authTokens", JSON.stringify(data));
+    try {
+      const response = await fetch("http://127.0.0.1:8000/token/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: e.target.username.value,
+          password: e.target.password.value,
+        }),
+      });
+      if (response.ok) {
+        let data = await response.json();
+        if (data) {
+          if (typeof window !== "undefined") {
+            localStorage.setItem("authTokens", JSON.stringify(data));
+          }
+          setAuthTokens(data);
+          setUser(jwtDecode(data.access));
+          const auth = await fetch(`http://127.0.0.1:8000/regional-employees/${jwtDecode(data.access).email}/`)
+          if(auth.ok){
+            setShow(true);
+          }
+          else{
+            setShow(false);
+          }
+          router.push("/");
+          return { success: true };
+        } else {
+          const error = "Something went wrong while logging in.";
+          return { success: false, error: error };
         }
-        setAuthTokens(data);
-        setUser(jwtDecode(data.access));
-        router.push("/");
-        return { success: true };
       } else {
-        const error = "Something went wrong while logging in.";
-        return { success: false, error };
+        const data = await response.json();
+        const err = data.detail;
+        return { success: false, error: err };
       }
-    } else {
-      const data = await response.json();
-      const err = data.detail;
+    } catch (error) {
+      const err = "Network error.";
       return { success: false, error: err };
     }
   };
@@ -56,7 +70,7 @@ export const AuthProvider = ({ children }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ refresh: authTokens.refresh })
+      body: JSON.stringify({ refresh: authTokens.refresh }),
     })
       .then((res) => {
         if (res.ok) {
@@ -65,10 +79,13 @@ export const AuthProvider = ({ children }) => {
           }
           setAuthTokens(null);
           setUser(null);
+          setShow(false);
           router.push("/");
         }
       })
-      .catch((err) => {console.log(err);});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const updateToken = async () => {
@@ -112,6 +129,15 @@ export const AuthProvider = ({ children }) => {
         } else {
           setAuthTokens(JSON.parse(authTokens));
           setUser(jwtDecode(authTokens));
+          fetch(`http://127.0.0.1:8000/regional-employees/${jwtDecode(authTokens).email}/`).then((response) =>{
+            if(response.ok){
+              setShow(true);
+            }
+            else{
+              setShow(false);
+            }
+          }).catch((err) => console.log(err))
+
         }
       } else {
         setAuthTokens(null);
@@ -133,6 +159,7 @@ export const AuthProvider = ({ children }) => {
   let contextData = {
     user: user,
     authTokens: authTokens,
+    show: show,
     loginUser: loginUser,
     logoutUser: logoutUser,
   };

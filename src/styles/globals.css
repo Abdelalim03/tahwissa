@@ -110,3 +110,7 @@ input[type="time"]{
   }
 
 }
+
+.text-wrapper {
+  word-wrap: break-word;
+}
