@@ -210,7 +210,7 @@ function AddPointForm(props) {
           <p className="text-lg text-center md:text-left mb-2">
             Select the intrest point category :
           </p>
-          <div className="md:flex md:flex-row gap-2 md:gap-4 text-sm md:text-base grid grid-flow-row grid-rows-2 grid-cols-6">
+          <div className="flex flex-row gap-2 md:gap-4 justify-center md:justify-start md:items-center  text-base ">
             {CATEGORIES.map(category=>(
               <div className="flex items-center gap-2 " key={category}>
               <input

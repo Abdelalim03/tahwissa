@@ -14,6 +14,7 @@ export const  initialCities = [
       title:"bougaa lafayette",
       description: "",
       time: "3 Days",
+      count_views:2
     },
     {
       id: "5",
@@ -27,6 +28,7 @@ export const  initialCities = [
       title:"bougaa lafayette",
       description: "",
       time: "3 Days",
+      count_views:5
     },
     {
       id: "2",
@@ -40,6 +42,7 @@ export const  initialCities = [
       title:"bougaa lafayette",
       description: "",
       time: "3 Days",
+      count_views:8
     },
     {
       id: "3",
@@ -53,6 +56,7 @@ export const  initialCities = [
       title:"bougaa lafayette",
       description: "",
       time: "3 Days",
+      count_views:5
     },
     {
       id: "4",
@@ -66,6 +70,7 @@ export const  initialCities = [
       title:"bougaa lafayette",
       description: "",
       time: "3 Days",
+      count_views:4
     },
   ];
 

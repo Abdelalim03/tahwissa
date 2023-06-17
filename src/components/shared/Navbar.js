@@ -8,7 +8,7 @@ function Navbar() {
     <nav className={`navbar  fixed backdrop-blur-sm z-10 h-fit flex-col lg:flex-row border-b-2 `}>
         <div className={`flex lg:block w-full lg:w-auto justify-between  items-center ${visible && "mb-10" }  lg:mb-0`}>
           <Link href="/" className='logo '>
-              Travelling!
+              Tahwissa!
           </Link>
           <button className="space-y-2 w-8 lg:hidden" onClick={toggleVisible}>
             <div className="w-full h-1 rounded-full bg-orange-500" />
