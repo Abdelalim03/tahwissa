@@ -20,7 +20,7 @@ function EventCard() {
               <span className="text-xl font-medium">17/02/2023</span>
             </div>
           </div>
-        </div>
+    </div>
   )
 }
 

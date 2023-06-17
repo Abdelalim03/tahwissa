@@ -37,7 +37,7 @@ function Navbar() {
         }  lg:mb-0`}
       >
         <Link href="/" className="logo ">
-          Travelling!
+          Tahwissa!
         </Link>
         <button className="space-y-2 w-8 lg:hidden" onClick={toggleVisible}>
           <div className="w-full h-1 rounded-full bg-orange-500" />

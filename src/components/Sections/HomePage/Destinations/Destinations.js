@@ -1,7 +1,6 @@
 import DestinationCard from "@/components/shared/DestinationCard";
 import { initialCities } from "@/data/data";
 import Link from "next/link";
-import React from "react";
 
 function Destinations() {
   return (
@@ -13,7 +12,7 @@ function Destinations() {
             Vacations to make your experience enjoyable in Indonesia!
           </p>
         </div>
-        <Link href="/intrestpoint" className="text-base text-mainColor">
+        <Link href="/interestpoints" className="text-base text-mainColor">
           Show all
         </Link>
       </div>
