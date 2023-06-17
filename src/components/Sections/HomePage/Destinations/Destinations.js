@@ -1,7 +1,6 @@
 import DestinationCard from "@/components/shared/DestinationCard";
 import { initialCities } from "@/data/data";
 import Link from "next/link";
-import React from "react";
 
 function Destinations() {
   return (
