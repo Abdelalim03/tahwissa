@@ -1,27 +1,18 @@
 import Link from "next/link";
-import React, { useContext, useState } from "react";
-import { FiChevronDown, FiLogOut } from "react-icons/fi"
+import React, { use, useContext, useEffect, useState } from "react";
+import { FiChevronDown, FiLogOut } from "react-icons/fi";
 import { useAuth } from "../AuthContext";
+import { getUsernameFromEmail } from "../Utiles";
 
 function Navbar() {
   const [visible, setVisible] = useState(false);
   const toggleVisible = () => setVisible(!visible);
-  const { user, logoutUser } = useAuth();
+  const { user, logoutUser, show } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  function getUsernameFromEmail(email) {
-    const regex = /^([^@]+)@/;
-    const match = email.match(regex);
-
-    if (match && match.length > 1) {
-      return match[1];
-    }
-
-    return null;
-  }
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
-  }
+  };
 
   const handleLogout = () => {
     logoutUser();
@@ -59,6 +50,9 @@ function Navbar() {
         <a className="nav-item" href="/#about">
           About Us
         </a>
+        {(show && <Link className="nav-item" href="/dashbord">
+          Dashbord
+        </Link>)}
         {user ? (
           <div className="relative lg:hidden inline-block select-none">
             <div

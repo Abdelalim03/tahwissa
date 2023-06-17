@@ -5,21 +5,154 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
 import EventCard from "@/components/shared/EventCard";
 import Testimonies from "@/components/shared/Testimonies";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "@/components/AuthContext";
+import { AiFillCloseCircle } from "react-icons/ai";
+import { Link } from "react-daisyui";
 
-function Singlepoint(){
+function Singlepoint() {
   const router = useRouter();
-  const { id } = router.query;
-  const images = ["/test/test2.jpg", "/test/test1.jpg", "/test/test3.jpg"];
+  const { singlepoint } = router.query;
+  const { authTokens, user } = useAuth();
+
+  const [pointdetails, setpointdetails] = useState({});
+  const [pointsimgs, setpointimgs] = useState([]);
+  const [pointTranspotations, setpointTransportations] = useState([]);
+  const [pointevents, setpointevents] = useState([]);
+  const [pointComments, setpointComments] = useState([]);
+
+  useEffect(() => {
+    if (singlepoint) {
+      fetch(`http://127.0.0.1:8000/points-of-interest/${singlepoint.replace(/_/g, ' ')}/`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setpointdetails(data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [singlepoint]);
+
+  useEffect(() => {
+    if (singlepoint) {
+      fetch(`http://127.0.0.1:8000/photos/?point_of_interest=${singlepoint.replace(/_/g, ' ')}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setpointimgs(data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [singlepoint]);
+
+  useEffect(() => {
+    if (singlepoint) {
+      fetch(
+        `http://127.0.0.1:8000/point-of-interest-transportations/?point_of_interest=${singlepoint.replace(/_/g, ' ')}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setpointTransportations(data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [singlepoint]);
+
+  useEffect(() => {
+    if (singlepoint) {
+      fetch(`http://127.0.0.1:8000/events/?point_of_interest=${singlepoint.replace(/_/g, ' ')}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setpointevents(data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [singlepoint]);
+
+  useEffect(() => {
+    if (singlepoint) {
+      fetch(`http://127.0.0.1:8000/events/?point_of_interest=${singlepoint.replace(/_/g, ' ')}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setpointevents(data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [singlepoint]);
+
+  useEffect(() => {
+    if (singlepoint) {
+      fetch(`http://127.0.0.1:8000/comments/?point_of_interest=${singlepoint.replace(/_/g, ' ')}`)
+        .then((response) => response.json())
+        .then((data) => {
+          let list = data.slice(0, 3);
+          setpointComments(list);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [singlepoint]);
+
   SwiperCore.use([Navigation]);
 
   const [inputs, setInputs] = useState("");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [color, setColor] = useState("");
+
+  const handleSnackbarClose = () => {
+    setShowSnackbar(false);
+  };
 
   function handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   }
+
+  const handleSubmit = async () => {
+    console.log(
+      JSON.stringify({
+        id: `${user.email}-${singlepoint}`,
+        comment: inputs.comment,
+        rating: parseInt(inputs.rating),
+        tourist: user.user_id,
+        point_of_interest: singlepoint,
+      })
+    );
+    const response = await fetch("http://127.0.0.1:8000/comments/", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${authTokens.access}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: `${user.email}-${singlepoint.replace(/_/g, ' ')}`,
+        comment: inputs.comment,
+        rating: parseInt(inputs.rating),
+        tourist: user.user_id,
+        point_of_interest: singlepoint.replace(/_/g, ' '),
+      }),
+    });
+    if (response.ok) {
+      setSnackbarMessage("Comment Saved Successfully!");
+      setShowSnackbar(true);
+      setColor("bg-green-300");
+    } else {
+      if (response.status === 401) {
+        setSnackbarMessage("Unauthorised to comment, Sign in!");
+        setShowSnackbar(true);
+        setColor("bg-red-300");
+      } else if (response.status === 403) {
+        setSnackbarMessage("You can only comment one time!");
+        setShowSnackbar(true);
+        setColor("bg-red-300");
+      } else {
+        setSnackbarMessage("An error occured!");
+        setShowSnackbar(true);
+        setColor("bg-red-300");
+      }
+    }
+    setInputs({ comment: "", rating: "" });
+  };
 
   return (
     <div className=" py-24  min-h-screen overflow-auto">
@@ -31,11 +164,11 @@ function Singlepoint(){
               navigation={true}
               className="rounded-lg w-[250px] h-[200px] lg:w-[350px]"
             >
-              {images.map((image, index) => (
+              {pointsimgs.map((image, index) => (
                 <SwiperSlide key={index}>
                   <img
                     className="h-full w-full"
-                    src={image}
+                    src={`http://127.0.0.1:8000${image.image}`}
                     alt={`Image ${index}`}
                   />
                 </SwiperSlide>
@@ -43,10 +176,15 @@ function Singlepoint(){
             </Swiper>
             <div className="pt-6 flex flex-col gap-3">
               <p className="text-2xl font-bold text-secondColor">
-                borj legya w smata - Tipaza
+                {pointdetails.name}
               </p>
-              <p className="text-xl font-medium"> Categroy: Lieu</p>
-              <p className="text-xl font-medium">Themes: Nature, Histore</p>
+              <p className="text-xl font-medium">
+                {" "}
+                Categroy: {pointdetails.category}
+              </p>
+              <p className="text-xl font-medium">
+                Themes: {pointdetails.theme}
+              </p>
               <div className="flex flex-row items-center gap-3">
                 {/*<p className="text-xl font-medium">Come by:</p>
                 <img
@@ -70,11 +208,15 @@ function Singlepoint(){
                   className={`h-5 w-5`}
               />*/}
                 <p className="text-xl font-medium">Opening: </p>
-                <span className="text-xl font-medium">8:30</span>
+                <span className="text-xl font-medium">
+                  {pointdetails.openhour}
+                </span>
               </div>
               <div className="flex flex-row items-center gap-3">
                 <p className="text-xl font-medium">Closing: </p>
-                <span className="text-xl font-medium">8:30</span>
+                <span className="text-xl font-medium">
+                  {pointdetails.closehour}
+                </span>
               </div>
             </div>
           </div>
@@ -125,81 +267,83 @@ function Singlepoint(){
           >
             <div className="flex justify-center items-center p-6 h-full rounded-b-lg bg-gray-400 bg-opacity-30 backdrop-blur-lg">
               <div className="flex flex-row gap-5 lg:gap-16">
-                <img
-                  src="/transport/bus.png"
-                  alt="transport"
-                  className={`w-11 h-11 lg:h-20 lg:w-20`}
-                />
-                <img
-                  src="/transport/tram.png"
-                  alt="transport"
-                  className={`w-11 h-11 lg:h-20 lg:w-20`}
-                />
-                <img
-                  src="/transport/metro.png"
-                  alt="transport"
-                  className={`w-11 h-11 lg:h-20 lg:w-20`}
-                />
-                <img
-                  src="/transport/train.png"
-                  alt="transport"
-                  className={`w-11 h-11 lg:h-20 lg:w-20`}
-                />
+                {pointTranspotations.map((transport) => (
+                  <img
+                    src={`/transport/${transport.transportation}.png`}
+                    alt="transport"
+                    className={`w-11 h-11 lg:h-20 lg:w-20`}
+                  />
+                ))}
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
+      <div>
+        
+      </div>
       <Title first={"Point Events"} />
-      <div className="container mb-5 p-10 w-fit shadow-xl rounded-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        <EventCard />
-        <EventCard />
-        <EventCard />
-        <EventCard />
+      <div className="container mb-5 p-10 w-fit shadow-xl rounded-lg flex flex-col lg:grid lg:grid-cols-3 gap-10">
+        {pointevents.map((event) => (
+          <Link href={`http://localhost:3000/interestpoints/sidi/events:${event.name.replace(/\s/g, '_')}`}>
+            <EventCard event={event}/>
+          </Link>
+        ))}
       </div>
 
-
-      <Title first={"Testimonies"}/>
+      <Title first={"Testimonies"} />
       <div className="container mb-5 p-10 w-fit rounded-lg flex flex-col lg:flex-row gap-10">
-        <Testimonies />
-        <Testimonies />
-        <Testimonies />
+        {pointComments.map((comment) => (
+          <Testimonies comment={comment} />
+        ))}
       </div>
-      <Title first={"Add Comment"}/>
+      <Title first={"Add Comment"} />
       <div className="container w-full py-10 px-16 shadow-xl rounded-lg flex flex-col gap-5">
-          <input type="text"
-            className="resize-none p-2 border-[1px] border-[rgba(0, 0, 0, 0.3)] rounded-sm"
-            name="comment"
-            placeholder="Add your comment here"
-            value={inputs.comment || ""}
-            onChange={handleChange}
-          ></input>
-          <input type="number"
-            className="resize-none p-2 border-[1px] border-[rgba(0, 0, 0, 0.3)] rounded-sm"
-            name="rating"
-            placeholder="From 1 to 5 stars, enter you rating here"
-            value={inputs.rating || ""}
-            onChange={handleChange}
-            max={"5"}
-            min={"1"}
-          ></input>
-          <div className="w-full flex flex-row-reverse">
-            <button className="submit-button rounded-lg p-2 w-fit flex justify-center items-center gap-2 cursor-pointer hover:scale-110 bg-[#EE462F] text-white">
-              <img
-                alt="submit"
-                src="/sections/addPointForm/submit.png"
-                className="w-3 h-3"
-              />
-              <span>Submit</span>
-            </button>
-          </div>
+        <input
+          type="text"
+          className="resize-none p-2 border-[1px] border-[rgba(0, 0, 0, 0.3)] rounded-sm"
+          name="comment"
+          placeholder="Add your comment here"
+          value={inputs.comment || ""}
+          maxLength={200}
+          onChange={handleChange}
+        ></input>
+        <input
+          type="number"
+          className="resize-none p-2 border-[1px] border-[rgba(0, 0, 0, 0.3)] rounded-sm"
+          name="rating"
+          placeholder="From 1 to 5 stars, enter you rating here"
+          value={inputs.rating || ""}
+          onChange={handleChange}
+          max={"5"}
+          min={"1"}
+        ></input>
+        <div className="w-full flex flex-row-reverse">
+          <button
+            onClick={handleSubmit}
+            className="submit-button rounded-lg p-2 w-fit flex justify-center items-center gap-2 cursor-pointer hover:scale-110 bg-[#EE462F] text-white"
+          >
+            <img
+              alt="submit"
+              src="/sections/addPointForm/submit.png"
+              className="w-3 h-3"
+            />
+            <span>Submit</span>
+          </button>
+        </div>
       </div>
-
-
+      {showSnackbar && (
+        <div
+          className={`fixed bottom-10 right-2 lg:right-10 ${color} flex flex-row gap-3 items-center p-4 shadow-md rounded-md`}
+        >
+          <div>{snackbarMessage}</div>
+          <button onClick={handleSnackbarClose}>
+            <AiFillCloseCircle />
+          </button>
+        </div>
+      )}
     </div>
   );
-};
+}
 
 export default Singlepoint;

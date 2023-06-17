@@ -1,19 +1,51 @@
 import React, { useContext, useState } from "react";
 import Link from "next/link";
 import Title from "@/components/shared/Title";
+import { AiFillCloseCircle } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
 
-  const handleSubmit = (e) => {
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [color, setColor] = useState("");
+
+  const router = useRouter();
+
+  const handleSnackbarClose = () => {
+    setShowSnackbar(false);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("First Name:", firstName);
-    console.log("Last Name:", lastName);
+    try {
+      const response = await fetch("http://127.0.0.1:8000/register/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: e.target.email.value,
+          password: e.target.password.value,
+          first_name: e.target.firstname.value,
+          last_name: e.target.lastname.value,
+        }),
+      });
+      if (response.ok) {
+        setSnackbarMessage("Successfully registered!");
+        setShowSnackbar(true);
+        setColor("bg-green-300");
+        router.push("/signin");
+      } else {
+        setSnackbarMessage(`${response.statusText}`);
+        setShowSnackbar(true);
+        setColor("bg-red-300");
+      }
+    } catch (error) {
+      setSnackbarMessage(`Network error`);
+      setShowSnackbar(true);
+      setColor("bg-red-300");
+    }
   };
 
   return (
@@ -34,10 +66,8 @@ export default function Signup() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="email"
             id="email"
+            name="email"
             placeholder="Enter your email(*)"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
           />
         </div>
         <div className="mb-4">
@@ -52,9 +82,7 @@ export default function Signup() {
             type="password"
             id="password"
             placeholder="Enter your password(*)"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            name="password"
           />
         </div>
         <div className="mb-4">
@@ -69,9 +97,7 @@ export default function Signup() {
             type="text"
             id="firstName"
             placeholder="Enter your first name(*)"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
+            name="firstname"
           />
         </div>
         <div className="mb-6">
@@ -86,9 +112,7 @@ export default function Signup() {
             type="text"
             id="lastName"
             placeholder="Enter your last name(*)"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
+            name="lastname"
           />
         </div>
         <button
@@ -104,6 +128,16 @@ export default function Signup() {
           </Link>
         </div>
       </form>
+      {showSnackbar && (
+        <div
+          className={`fixed bottom-10 right-2 lg:right-10 ${color} flex flex-row gap-3 items-center p-4 shadow-md rounded-md`}
+        >
+          <div>{snackbarMessage}</div>
+          <button onClick={handleSnackbarClose}>
+            <AiFillCloseCircle />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

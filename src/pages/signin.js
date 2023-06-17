@@ -9,7 +9,7 @@ export default function Signin() {
   const { loginUser } = useAuth(); 
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [showSnackbar, setShowSnackbar] = useState(false);
-  const [color, setColor] = useState("")
+  const [color, setColor] = useState("");
 
   const handleSnackbarClose = () => {
     setShowSnackbar(false);
