@@ -1,8 +1,8 @@
 import DestinationCard from "@/components/shared/DestinationCard";
-import { initialCities } from "@/data/data";
+// import { initialCities } from "@/data/data";
 import Link from "next/link";
 
-function Destinations() {
+function Destinations({initialCities}) {
   return (
     <div className="container flex flex-col gap-5  font-display py-20">
       <div className="flex justify-between px-8 items-center">
@@ -16,7 +16,7 @@ function Destinations() {
           Show all
         </Link>
       </div>
-      <div className="grid  justify-center justify-items-center   grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <div className="grid  justify-center justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {initialCities.map((destination) => {
           return (
             <DestinationCard key={destination.id} destination={destination} />

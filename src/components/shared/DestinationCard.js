@@ -5,7 +5,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 function DestinationCard({ destination,map }) {
-  const { x, y, img, title, category, wilaya, commune, time, id, count_views } = destination;
+  const { longitude, latitude, img, name, category, wilaya, commune, openhour, closehour, time, id, count_views } = destination;
   const dispatch = useDispatch();
   return (
     <div onMouseEnter={()=>{
@@ -33,7 +33,7 @@ function DestinationCard({ destination,map }) {
         <Link href={`/interestpoints/${id}`}>
           <h2 className="text-xl">{title}</h2>
         </Link>
-        <p className="text-base mb-2 text-[#636363] ">{time}</p>
+        <p className="text-base mb-2 text-[#636363] ">{openhour} - {closehour}</p>
         <div className="flex items-center w-full justify-between">
           <span className="text-base  text-[#42A7C3]">{category}</span>
           <div className="text-black">
