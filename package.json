@@ -16,6 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mapbox/mapbox-gl-geocoder": "^5.0.1",
     "autoprefixer": "10.4.14",
+    "axios": "^1.4.0",
     "daisyui": "^2.51.6",
     "jwt-decode": "^3.1.2",
     "mapbox-gl": "^2.15.0",
